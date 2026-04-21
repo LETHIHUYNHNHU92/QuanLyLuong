@@ -69,9 +69,9 @@ app.use('/dashboard', kiemTraKeToan, dashboard);
 
 // CHỨC NĂNG ĐĂNG NHẬP / ĐĂNG XUẤT / ĐỔI MẬT KHẨU
 
-app.get('/login', (req, res) => {
+app.get('/Login', (req, res) => {
     if (req.session.user) {
-        if (req.session.user.VaiTro === 'Kế toán') return res.redirect('/bangluong');
+        if (req.session.user.VaiTro === 'Kế toán') return res.redirect('/BangLuong');
         else return res.redirect('/me/PhieuLuong');
     }
     res.render('login'); 
@@ -112,12 +112,12 @@ app.get('/logout', (req, res) => {
     res.redirect('/Login');
 });
 
-app.get('/doimatkhau', (req, res) => {
+app.get('/DoiMatKhau', (req, res) => {
     if (!req.session.user) return res.redirect('/Login');
     res.render('doimatkhau', { user: req.session.user });
 });
 
-app.post('/doimatkhau', async (req, res) => {
+app.post('/DoiMatKhau', async (req, res) => {
     if (!req.session.user) return res.redirect('/Login');
     try {
         if (req.body.MatKhauMoi !== req.body.XacNhanMatKhau) {
@@ -149,8 +149,8 @@ const BangLuong = require('./models/BangLuong');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'huynhnhu6022@gmail.com', // Email của Như
-        pass: 'zpxkrkienehwrvkw'    // DÁN MẬT KHẨU ỨNG DỤNG 16 KÝ TỰ VÀO ĐÂY
+        user: 'huynhnhu6022@gmail.com', 
+        pass: 'zpxkrkienehwrvkw'    
     }
 });
 
