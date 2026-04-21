@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var session = require('express-session'); 
 var bodyParser = require('body-parser');
 
-const nhanVienModel = require('./models/nhanvien'); 
+const nhanVienModel = require('./models/NhanVien'); 
 
 var app = express();
 
