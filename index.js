@@ -49,7 +49,7 @@ const kiemTraKeToan = (req, res, next) => {
 };
 
 
-var nhanvien = require('./routers/nhanvien'); 
+var nhanvien = require('./routers/NhanVien'); 
 app.use('/nhanvien', kiemTraKeToan, nhanvien);
 
 var hopDong = require('./routers/hopdong');
