@@ -50,16 +50,16 @@ const kiemTraKeToan = (req, res, next) => {
 
 
 var nhanvien = require('./routers/NhanVien'); 
-app.use('/nhanvien', kiemTraKeToan, nhanvien);
+app.use('/NhanVien', kiemTraKeToan, nhanvien);
 
 var hopDong = require('./routers/HopDong');
-app.use('/hopdong', kiemTraKeToan, hopDong);
+app.use('/HopDong', kiemTraKeToan, hopDong);
 
 var chamCong = require('./routers/ChamCong');
-app.use('/chamcong', kiemTraKeToan, chamCong);
+app.use('/ChamCong', kiemTraKeToan, chamCong);
 
 var bangLuong = require('./routers/BangLuong');
-app.use('/bangluong', kiemTraKeToan, bangLuong);
+app.use('/BangLuong', kiemTraKeToan, bangLuong);
 
 var me = require('./routers/me');
 app.use('/me', me);
