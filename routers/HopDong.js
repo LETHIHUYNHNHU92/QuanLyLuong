@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const hopDongModel = require('../models/hopdong');
+const hopDongModel = require('../models/HopDong');
 
 router.get('/', async (req, res) => {
     try {
