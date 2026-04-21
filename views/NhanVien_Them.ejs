@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Nhân Viên - Hệ Thống Lương</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #007355;    
+            --sidebar-bg: #007355;       
+            --sidebar-hover: #005a42;    
+            --bg-light: #f4f7f6;         
+            --text-main: #1c2d33;        
+            --border-color: #e8edeb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex; 
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            width: 240px; 
+            background-color: var(--sidebar-bg); 
+            color: white; 
+            padding: 20px 0; 
+            position: fixed; 
+            height: 100%; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05); 
+        }
+        
+        .sidebar h2 { 
+            padding: 0 20px; 
+            font-size: 18px; 
+            color: #bbf7d0; 
+            margin-bottom: 30px; 
+            font-weight: 700; 
+        }
+        
+        .menu-item { 
+            padding: 12px 20px; 
+            cursor: pointer; 
+            display: block; 
+            color: #e5e7eb; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            font-weight: 500; 
+        }
+        
+        .menu-item:hover, .menu-item.active { 
+            background-color: var(--sidebar-hover); 
+            color: white; 
+            border-left: 4px solid #bbf7d0; 
+        }
+        
+        .menu-item i {
+            width: 25px;
+            text-align: left;
+            margin-right: 8px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content { 
+            margin-left: 240px; 
+            flex: 1; 
+            padding: 40px; 
+        }
+        
+        .header-section { 
+            margin-bottom: 30px; 
+        }
+        
+        h1 { 
+            margin: 0; 
+            font-size: 24px; 
+            font-weight: 600; 
+        }
+        
+        .breadcrumb { 
+            color: #5d6d7e; 
+            font-size: 14px; 
+            margin-top: 5px; 
+        }
+        
+        .breadcrumb a { 
+            color: var(--primary-green); 
+            text-decoration: none; 
+        }
+
+        /* --- FORM STYLES --- */
+        .form-card { 
+            background: white; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            padding: 30px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+            max-width: 800px; 
+        }
+        
+        .form-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+        
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        label { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: var(--text-main); 
+        }
+        
+        input, select { 
+            padding: 12px; 
+            border: 1px solid #d1d9d6; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            font-family: 'Inter', sans-serif; 
+            transition: 0.3s; 
+        }
+        
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: var(--primary-green); 
+            box-shadow: 0 0 0 3px rgba(0, 115, 85, 0.1); 
+        }
+
+        /* --- CSS LỖI --- */
+        .error-message {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid #f87171;
+            font-weight: 500;
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group { 
+            display: flex; 
+            gap: 15px; 
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid var(--border-color); 
+        }
+        
+        .btn-submit { 
+            background-color: var(--primary-green); 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 6px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        
+        .btn-submit:hover { 
+            background-color: var(--sidebar-hover); 
+        }
+        
+        .btn-cancel { 
+            background-color: white; 
+            color: #5d6d7e; 
+            padding: 12px 24px; 
+            border: 1px solid #d1d9d6; 
+            border-radius: 6px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            text-align: center; 
+        }
+        
+        .btn-cancel:hover { 
+            background-color: #f4f7f6; 
+            color: var(--text-main); 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Hệ Thống Lương</h2>
+        <a href="/" class="menu-item">
+            <i class="fa-solid fa-chart-pie"></i> Tổng quan
+        </a>
+        
+        <a href="/nhanvien" class="menu-item active">
+            <i class="fa-solid fa-users"></i> Nhân viên
+        </a>
+        
+        <a href="/hopdong" class="menu-item">
+            <i class="fa-solid fa-file-contract"></i> Hợp đồng
+        </a>
+        
+        <a href="/chamcong" class="menu-item">
+            <i class="fa-solid fa-calendar-check"></i> Chấm công
+        </a>
+        
+        <a href="/bangluong" class="menu-item">
+            <i class="fa-solid fa-money-check-dollar"></i> Bảng lương
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="header-section">
+            <h1>Thêm Nhân Viên Mới</h1>
+            <div class="breadcrumb"><a href="/nhanvien">Nhân viên</a> / Thêm mới</div>
+        </div>
+
+        <div class="form-card">
+            <% if (typeof error !== 'undefined') { %>
+                <div class="error-message">⚠️ <%= error %></div>
+            <% } %>
+
+            <form action="/nhanvien/them" method="POST">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mã Cán Bộ (*)</label>
+                        <input type="text" name="MaCanBo" 
+                            class="<%= (typeof error !== 'undefined' && error.includes('Mã cán bộ')) ? 'input-error' : '' %>"
+                            value="<%= typeof oldData !== 'undefined' ? oldData.MaCanBo : '' %>" 
+                            placeholder="VD: NV001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Họ và Tên (*)</label>
+                        <input type="text" name="HoVaTen" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.HoVaTen : '' %>" 
+                            placeholder="Nhập họ và tên..." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email (*)</label>
+                        <input type="email" name="Email" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.Email : '' %>" 
+                            placeholder="nhanvien@congty.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Điện Thoại</label>
+                        <input type="text" name="SoDienThoai" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.SoDienThoai : '' %>" 
+                            placeholder="09xxxxxxxxx">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ngày Sinh</label>
+                        <input type="text" id="ngaySinh" name="NgaySinh" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.NgaySinh : '' %>" 
+                            placeholder="DD/MM/YYYY">
+                    </div>
+                    <div class="form-group">
+                        <label>Giới Tính</label>
+                        <select name="GioiTinh">
+                            <option value="Nam" <%= (typeof oldData !== 'undefined' && oldData.GioiTinh === 'Nam') ? 'selected' : '' %>>Nam</option>
+                            <option value="Nữ" <%= (typeof oldData !== 'undefined' && oldData.GioiTinh === 'Nữ') ? 'selected' : '' %>>Nữ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phòng Ban</label>
+                        <select name="PhongBan">
+                            <option value="Phòng IT" <%= (typeof oldData !== 'undefined' && oldData.PhongBan === 'Phòng IT') ? 'selected' : '' %>>Phòng IT</option>
+                            <option value="Phòng Kế toán" <%= (typeof oldData !== 'undefined' && oldData.PhongBan === 'Phòng Kế toán') ? 'selected' : '' %>>Phòng Kế toán</option>
+                            <option value="Phòng Nhân sự" <%= (typeof oldData !== 'undefined' && oldData.PhongBan === 'Phòng Nhân sự') ? 'selected' : '' %>>Phòng Nhân sự</option>
+                            <option value="Phòng Kinh doanh" <%= (typeof oldData !== 'undefined' && oldData.PhongBan === 'Phòng Kinh doanh') ? 'selected' : '' %>>Phòng Kinh doanh</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Chức Vụ</label>
+                        <select name="ChucVu">
+                            <option value="Nhân viên" <%= (typeof oldData !== 'undefined' && oldData.ChucVu === 'Nhân viên') ? 'selected' : '' %>>Nhân viên</option>
+                            <option value="Trưởng phòng" <%= (typeof oldData !== 'undefined' && oldData.ChucVu === 'Trưởng phòng') ? 'selected' : '' %>>Trưởng phòng</option>
+                            <option value="Giám đốc" <%= (typeof oldData !== 'undefined' && oldData.ChucVu === 'Giám đốc') ? 'selected' : '' %>>Giám đốc</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Trình Độ Học Vấn</label>
+                        <input type="text" name="TrinhDoHocVan" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.TrinhDoHocVan : '' %>" 
+                            placeholder="Đại học, Cao đẳng...">
+                    </div>
+                    <div class="form-group">
+                        <label>Số Người Phụ Thuộc</label>
+                        <input type="number" name="NguoiPhuThuoc" 
+                            value="<%= typeof oldData !== 'undefined' ? oldData.NguoiPhuThuoc : '0' %>" min="0">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">💾 Lưu Nhân Viên</button>
+                    <a href="/nhanvien" class="btn-cancel">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#ngaySinh", {
+            dateFormat: "Y-m-d",  
+            altInput: true,       
+            altFormat: "d/m/Y",   
+            allowInput: true      
+        });
+    </script>
+</body>
+</html>

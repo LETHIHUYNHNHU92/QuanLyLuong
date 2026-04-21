@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Chấm Công - Hệ Thống Lương</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --primary-green: #007355; 
+            --sidebar-bg: #007355; 
+            --sidebar-hover: #005a42; 
+            --bg-light: #f4f7f6; 
+            --text-main: #1c2d33; 
+            --border-color: #e8edeb; 
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            background-color: var(--bg-light); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            width: 240px; 
+            background-color: var(--sidebar-bg); 
+            color: white; 
+            padding: 20px 0; 
+            position: fixed; 
+            height: 100%; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05); 
+        }
+
+        .menu-item { 
+            padding: 12px 20px; 
+            cursor: pointer; 
+            display: block; 
+            color: #e5e7eb; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            font-weight: 500; 
+        }
+
+        .menu-item:hover, .menu-item.active { 
+            background-color: var(--sidebar-hover); 
+            color: white; 
+            border-left: 4px solid #bbf7d0; 
+        }
+
+        .menu-item i { 
+            width: 25px; 
+            text-align: left; 
+            margin-right: 8px; 
+            font-size: 16px; 
+            opacity: 0.9; 
+        }
+
+        /* --- NỘI DUNG CHÍNH --- */
+        .main-content { 
+            margin-left: 240px; 
+            flex: 1; 
+            padding: 40px; 
+        }
+
+        .header-section { 
+            margin-bottom: 30px; 
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 24px; 
+            font-weight: 600; 
+        }
+
+        .breadcrumb { 
+            color: #5d6d7e; 
+            font-size: 14px; 
+            margin-top: 5px; 
+        }
+
+        .breadcrumb a { 
+            color: var(--primary-green); 
+            text-decoration: none; 
+        }
+
+        /* --- FORM --- */
+        .form-card { 
+            background: white; 
+            border-radius: 8px; 
+            border: 1px solid var(--border-color); 
+            padding: 30px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+            max-width: 800px; 
+        }
+
+        .form-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .form-group-haft { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
+
+        label { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: var(--text-main); 
+        }
+
+        input, select { 
+            padding: 12px; 
+            border: 1px solid #d1d9d6; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            font-family: 'Inter', sans-serif; 
+            transition: 0.3s; 
+        }
+
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: var(--primary-green); 
+            box-shadow: 0 0 0 3px rgba(0, 115, 85, 0.1); 
+        }
+
+        .section-title { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: var(--primary-green); 
+            margin: 25px 0 15px 0; 
+            padding-bottom: 5px; 
+            border-bottom: 1px solid #e8edeb; 
+        }
+
+        /* --- NÚT BẤM --- */
+        .btn-group { 
+            display: flex; 
+            gap: 15px; 
+            margin-top: 30px; 
+            padding-top: 20px; 
+            border-top: 1px solid var(--border-color); 
+        }
+
+        .btn-submit { 
+            background-color: var(--primary-green); 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 6px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        .btn-submit:hover { 
+            background-color: var(--sidebar-hover); 
+        }
+
+        .btn-cancel { 
+            background-color: white; 
+            color: #5d6d7e; 
+            padding: 12px 24px; 
+            border: 1px solid #d1d9d6; 
+            border-radius: 6px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            text-decoration: none; 
+            text-align: center; 
+            transition: 0.3s; 
+        }
+
+        .btn-cancel:hover { 
+            background-color: #f4f7f6; 
+            color: var(--text-main); 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div style="padding: 0 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
+            <div style="background-color: #bbf7d0; color: var(--primary-green); width: 38px; height: 38px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div style="line-height: 1.2;">
+                <h2 style="margin: 0; padding: 0; font-size: 18px; color: white; font-weight: 700; letter-spacing: 0.5px;">Hệ Thống</h2>
+                <span style="color: #bbf7d0; font-size: 13px; font-weight: 500;">Quản Lý Lương</span>
+            </div>
+        </div>
+
+        <a href="/" class="menu-item">
+            <i class="fa-solid fa-chart-pie"></i> Tổng quan
+        </a>
+        <a href="/nhanvien" class="menu-item">
+            <i class="fa-solid fa-users"></i> Nhân viên
+        </a>
+        <a href="/hopdong" class="menu-item">
+            <i class="fa-solid fa-file-contract"></i> Hợp đồng
+        </a>
+        <a href="/chamcong" class="menu-item active">
+            <i class="fa-solid fa-calendar-check"></i> Chấm công
+        </a>
+        <a href="/bangluong" class="menu-item">
+            <i class="fa-solid fa-money-check-dollar"></i> Bảng lương
+        </a>
+    </div>
+
+    <div class="main-content">
+        <div class="header-section">
+            <h1>Chỉnh Sửa Chấm Công</h1>
+            <div class="breadcrumb">
+                <a href="/chamcong">Chấm công</a> / Sửa đổi
+            </div>
+        </div>
+
+        <div class="form-card">
+            <form action="/chamcong/sua/<%= chamCong._id %>" method="POST">
+                
+                <div class="section-title">1. Thông tin kỳ chấm công</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mã Cán Bộ (*)</label>
+                        <input type="text" name="MaCanBo" value="<%= chamCong.MaCanBo %>" readonly style="background-color: #f4f7f6; cursor: not-allowed;">
+                    </div>
+                    
+                    <div class="form-group-haft">
+                        <div class="form-group">
+                            <label>Tháng</label>
+                            <input type="number" name="Thang" value="<%= chamCong.Thang %>" readonly style="background-color: #f4f7f6; cursor: not-allowed;">
+                        </div>
+                        <div class="form-group">
+                            <label>Năm</label>
+                            <input type="number" name="Nam" value="<%= chamCong.Nam %>" readonly style="background-color: #f4f7f6; cursor: not-allowed;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-title">2. Dữ liệu công & OT</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Số ngày làm việc thực tế</label>
+                        <input type="number" name="SoNgayLamViec" value="<%= chamCong.SoNgayLamViec %>" step="0.5" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số giờ tăng ca (OT)</label>
+                        <input type="number" name="SoGioTangCa" value="<%= chamCong.SoGioTangCa %>" step="0.5" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="color: #059669;">Số ngày nghỉ CÓ PHÉP (Hưởng lương)</label>
+                        <input type="number" name="SoNgayNghiCoPhep" value="<%= chamCong.SoNgayNghiCoPhep || 0 %>" step="0.5" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #e74c3c;">Số ngày nghỉ KHÔNG PHÉP (Trừ lương)</label>
+                        <input type="number" name="SoNgayNghiKhongPhep" value="<%= chamCong.SoNgayNghiKhongPhep || 0 %>" step="0.5" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ghi chú công</label>
+                        <input type="text" name="GhiChu" value="<%= chamCong.GhiChu %>">
+                    </div>
+                </div>
+
+                <div class="section-title">3. Biến động thu nhập (VNĐ)</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tiền Thưởng (Bonus / KPI)</label>
+                        <input type="number" name="TienThuong" value="<%= chamCong.TienThuong %>" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiền Phạt (Đi trễ / Vi phạm)</label>
+                        <input type="number" name="TienPhat" value="<%= chamCong.TienPhat %>" min="0">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tiền Tạm Ứng (Đã ứng trong tháng)</label>
+                        <input type="number" name="TienTamUng" value="<%= chamCong.TienTamUng %>" min="0">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">Lưu Thay Đổi</button>
+                    <a href="/chamcong" class="btn-cancel">Hủy bỏ</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</body>
+</html>

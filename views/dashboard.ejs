@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng Quan Hệ Thống - Quản Lý Lương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root { --primary-green: #007355; --bg-light: #f4f7f6; --border-color: #e8edeb; --text-main: #1c2d33;}
+        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; background-color: var(--bg-light); color: var(--text-main); }
+        
+        /* SIDEBAR */
+        .sidebar { width: 240px; background-color: var(--primary-green); color: white; padding: 20px 0; position: fixed; height: 100%; box-shadow: 2px 0 10px rgba(0,0,0,0.05); }
+        .menu-item { padding: 12px 20px; display: block; color: #e5e7eb; text-decoration: none; transition: 0.3s; font-weight: 500;}
+        .menu-item.active, .menu-item:hover { background-color: #005a42; color: white; border-left: 4px solid #bbf7d0; }
+        .menu-item i { width: 25px; margin-right: 8px; }
+        
+        .main-content { margin-left: 240px; flex: 1; padding: 40px; }
+        
+        /* HEADER AVATAR */
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .header-top h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .user-menu { display: flex; align-items: center; gap: 10px; background: white; padding: 6px 15px 6px 6px; border-radius: 50px; border: 1px solid var(--border-color); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .user-avatar { width: 32px; height: 32px; background: var(--primary-green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .user-name { font-size: 14px; font-weight: 600; color: var(--text-main); }
+
+        /* Cấu trúc các ô thông số (Stats Cards) */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .stat-card { background: white; padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .stat-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        
+        /* Khu vực Biểu đồ */
+        .charts-section { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .chart-container { background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div style="padding: 0 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
+            <div style="background-color: #bbf7d0; color: var(--primary-green); width: 38px; height: 38px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 16px;">
+                 <i class="fa-solid fa-chart-line"></i>
+             </div>
+             <div style="line-height: 1.2;">
+                 <h2 style="margin: 0; padding: 0; font-size: 18px; color: white; font-weight: 700;">Hệ Thống</h2>
+                 <span style="color: #bbf7d0; font-size: 13px; font-weight: 500;">Quản Lý Lương</span>
+             </div>
+         </div>
+        <a href="/dashboard" class="menu-item active"><i class="fa-solid fa-chart-pie"></i> Tổng quan</a>
+        <a href="/nhanvien" class="menu-item"><i class="fa-solid fa-users"></i> Nhân viên</a>
+        <a href="/hopdong" class="menu-item"><i class="fa-solid fa-file-contract"></i> Hợp đồng</a>
+        <a href="/chamcong" class="menu-item"><i class="fa-solid fa-calendar-check"></i> Chấm công</a>
+        <a href="/bangluong" class="menu-item"><i class="fa-solid fa-money-check-dollar"></i> Bảng lương</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header-top">
+            <h1>Bảng Điều Khiển Tổng Quan</h1>
+            <% if (typeof user !== 'undefined' && user) { %>
+                <div class="user-menu">
+                    <div class="user-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="user-name"><%= user.HoVaTen %></div>
+                </div>
+            <% } %>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e0f2fe; color: #0ea5e9;"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <div style="color: #64748b; font-size: 14px;">Tổng nhân viên</div>
+                    <div style="font-size: 24px; font-weight: 700;"><%= tongNV %></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #f0fdf4; color: #16a34a;"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <div>
+                    <div style="color: #64748b; font-size: 14px;">Quỹ lương tháng này</div>
+                    <div style="font-size: 24px; font-weight: 700;"><%= tongQuyLuong.toLocaleString() %>đ</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 style="color: #1c2d33; margin-bottom: 20px;">Cơ cấu nhân sự theo Phòng ban</h3>
+                <div style="position: relative; height: 370px; width: 100%; display: flex; justify-content: center;">
+					<canvas id="phongBanChart"></canvas>
+				</div>
+            </div>
+            <div class="chart-container">
+                <h3 style="color: #1c2d33; margin-bottom: 20px;">Trạng thái hệ thống</h3>
+                <div style="padding-top: 50px;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 80px; color: var(--primary-green);"></i>
+                    <p style="margin-top: 20px; color: #64748b; font-weight: 500;">Mọi thứ đang hoạt động ổn định!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy dữ liệu từ EJS truyền sang Javascript
+        const dataPB = <%- JSON.stringify(tkPhongBan) %>;
+        
+        const labels = dataPB.map(item => item._id);
+        const counts = dataPB.map(item => item.count);
+
+        // Cấu hình biểu đồ tròn bằng Chart.js
+        const ctx = document.getElementById('phongBanChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: ['#007355', '#16a34a', '#22c55e', '#86efac', '#dcfce7'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+				maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

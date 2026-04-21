@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Hệ Thống Lương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f7f6;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-icon {
+            background-color: #bbf7d0;
+            color: #007355;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        h2 { margin: 0; color: #1c2d33; font-size: 24px; }
+        p { color: #5d6d7e; font-size: 14px; margin-top: 5px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #1c2d33; }
+        input { 
+            width: 100%; padding: 12px; border: 1px solid #d1d9d6; border-radius: 6px; 
+            font-family: 'Inter', sans-serif; font-size: 14px; box-sizing: border-box; transition: 0.3s;
+        }
+        input:focus { outline: none; border-color: #007355; box-shadow: 0 0 0 3px rgba(0, 115, 85, 0.1); }
+        
+        .btn-login {
+            width: 100%; background-color: #007355; color: white; padding: 14px; 
+            border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .btn-login:hover { background-color: #005a42; }
+        
+        .error-msg {
+            background-color: #fee2e2; color: #b91c1c; padding: 10px; border-radius: 6px;
+            font-size: 13px; text-align: center; margin-bottom: 20px; border: 1px solid #f87171;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h2>Đăng Nhập Hệ Thống</h2>
+            <p>Quản lý nhân sự & tiền lương</p>
+        </div>
+
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error-msg"><i class="fa-solid fa-triangle-exclamation"></i> <%= error %></div>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label>Mã Cán Bộ</label>
+                <input type="text" name="MaCanBo" placeholder="Ví dụ: NV001" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Mật Khẩu</label>
+                <input type="password" name="MatKhau" placeholder="Nhập mật khẩu..." required>
+            </div>
+            <button type="submit" class="btn-login">ĐĂNG NHẬP <i class="fa-solid fa-arrow-right" style="margin-left: 5px;"></i></button>
+        </form>
+    </div>
+
+</body>
+</html>
