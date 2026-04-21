@@ -39,7 +39,7 @@ mongoose.connect(uri)
 
 const kiemTraKeToan = (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect('/login'); // Chưa đăng nhập -> Đuổi ra
+        return res.redirect('/Login'); // Chưa đăng nhập -> Đuổi ra
     }
     if (req.session.user.VaiTro === 'Kế toán') {
         next(); // Là kế toán -> Cho phép đi tiếp vào phòng
@@ -52,13 +52,13 @@ const kiemTraKeToan = (req, res, next) => {
 var nhanvien = require('./routers/NhanVien'); 
 app.use('/nhanvien', kiemTraKeToan, nhanvien);
 
-var hopDong = require('./routers/hopdong');
+var hopDong = require('./routers/HopDong');
 app.use('/hopdong', kiemTraKeToan, hopDong);
 
-var chamCong = require('./routers/chamcong');
+var chamCong = require('./routers/ChamCong');
 app.use('/chamcong', kiemTraKeToan, chamCong);
 
-var bangLuong = require('./routers/bangluong');
+var bangLuong = require('./routers/BangLuong');
 app.use('/bangluong', kiemTraKeToan, bangLuong);
 
 var me = require('./routers/me');
@@ -72,12 +72,12 @@ app.use('/dashboard', kiemTraKeToan, dashboard);
 app.get('/login', (req, res) => {
     if (req.session.user) {
         if (req.session.user.VaiTro === 'Kế toán') return res.redirect('/bangluong');
-        else return res.redirect('/me/phieuluong');
+        else return res.redirect('/me/PhieuLuong');
     }
     res.render('login'); 
 });
 
-app.post('/login', async (req, res) => {
+app.post('/Login', async (req, res) => {
     try {
         var nv = await nhanVienModel.findOne({ 
             MaCanBo: req.body.MaCanBo, 
@@ -94,7 +94,7 @@ app.post('/login', async (req, res) => {
 			if (req.session.user.VaiTro === 'Kế toán') {
 				res.redirect('/dashboard'); // Đăng nhập xong đẩy thẳng sếp vào trang Tổng quan cho oai
 			} else {
-				res.redirect('/me/phieuluong');
+				res.redirect('/me/PhieuLuong');
 			}
 
 
@@ -109,16 +109,16 @@ app.post('/login', async (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.session.destroy(); 
-    res.redirect('/login');
+    res.redirect('/Login');
 });
 
 app.get('/doimatkhau', (req, res) => {
-    if (!req.session.user) return res.redirect('/login');
+    if (!req.session.user) return res.redirect('/Login');
     res.render('doimatkhau', { user: req.session.user });
 });
 
 app.post('/doimatkhau', async (req, res) => {
-    if (!req.session.user) return res.redirect('/login');
+    if (!req.session.user) return res.redirect('/Login');
     try {
         if (req.body.MatKhauMoi !== req.body.XacNhanMatKhau) {
             return res.render('doimatkhau', { error: "Mật khẩu xác nhận không khớp!", user: req.session.user });
@@ -137,13 +137,13 @@ app.post('/doimatkhau', async (req, res) => {
 
 // Trang chủ mặc định cũng trở về trang Login 
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    res.redirect('/Login');
 });
 
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
-const NhanVien = require('./models/nhanvien');
-const BangLuong = require('./models/bangluong');
+const NhanVien = require('./models/NhanVien');
+const BangLuong = require('./models/BangLuong');
 
 // 1. CẤU HÌNH GMAIL GỬI ĐI
 const transporter = nodemailer.createTransport({
