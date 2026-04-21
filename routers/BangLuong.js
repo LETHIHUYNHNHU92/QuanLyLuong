@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bangLuongModel = require('../models/bangluong');
-const hopDongModel = require('../models/hopdong');
-const chamCongModel = require('../models/chamcong');
-const nhanVienModel = require('../models/nhanvien'); 
+const bangLuongModel = require('../models/BangLuong');
+const hopDongModel = require('../models/HopDong');
+const chamCongModel = require('../models/ChamCong');
+const nhanVienModel = require('../models/NhanVien'); 
 
 function tinhThueTNCN(thuNhapTinhThue) {
     if (thuNhapTinhThue <= 0) return 0;
@@ -108,8 +108,8 @@ router.get('/tinhluong', async (req, res) => {
 
 //gg sheet
 const { google } = require('googleapis');
-const BangLuong = require('../models/bangluong');
-const NhanVien = require('../models/nhanvien');
+const BangLuong = require('../models/BangLuong');
+const NhanVien = require('../models/NhanVien');
 
 router.get('/xuat-google-sheet', async (req, res) => {
     try {

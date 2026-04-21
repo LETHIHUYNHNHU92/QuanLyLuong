@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var nhanVienModel = require('../models/NhanVien'); 
+var nhanVienModel = require('sNhanVien'); 
 
 
 router.get('/', async (req, res) => {
