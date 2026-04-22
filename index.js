@@ -74,7 +74,7 @@ app.get('/Login', (req, res) => {
         if (req.session.user.VaiTro === 'Kế toán') return res.redirect('/BangLuong');
         else return res.redirect('/me/PhieuLuong');
     }
-    res.render('login'); 
+    res.render('Login'); 
 });
 
 app.post('/Login', async (req, res) => {
