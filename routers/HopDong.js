@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         }
 
         var danhSachHD = await hopDongModel.find(dieuKien);
-        res.render('hopdong', { danhSach: danhSachHD, tuKhoa: tuKhoa });
+        res.render('HopDong', { danhSach: danhSachHD, tuKhoa: tuKhoa });
     } catch (error) {
         console.log(error);
         res.send("Lỗi lấy danh sách hợp đồng!");
@@ -39,7 +39,7 @@ router.post('/them', async (req, res) => {
 
         var hopDongMoi = new hopDongModel(duLieu);
         await hopDongMoi.save();
-        res.redirect('/hopdong');
+        res.redirect('/HopDong');
         
     } catch (error) {
         console.log("Lỗi thêm HĐ:", error);
@@ -50,7 +50,7 @@ router.post('/them', async (req, res) => {
 router.get('/xoa/:id', async (req, res) => {
     try {
         await hopDongModel.findByIdAndDelete(req.params.id);
-        res.redirect('/hopdong');
+        res.redirect('/HopDong');
     } catch (error) {
         console.log("Lỗi xóa HĐ:", error);
         res.send("Lỗi không thể xóa hợp đồng!");

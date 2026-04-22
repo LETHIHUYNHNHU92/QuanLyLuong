@@ -19,4 +19,4 @@ const bangLuongSchema = new mongoose.Schema({
     TrangThai: { type: String, default: "Đã chốt" }
 });
 
-module.exports = mongoose.model('bangluong', bangLuongSchema);
+module.exports = mongoose.model('BangLuong', bangLuongSchema);

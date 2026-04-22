@@ -16,4 +16,4 @@ const chamCongSchema = new mongoose.Schema({
     GhiChu: { type: String }
 });
 
-module.exports = mongoose.model('chamcong', chamCongSchema);
+module.exports = mongoose.model('ChamCong', chamCongSchema);

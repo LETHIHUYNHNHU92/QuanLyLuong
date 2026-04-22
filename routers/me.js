@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bangLuongModel = require('../models/BangLsuong');
+const bangLuongModel = require('../models/BangLuong');
 
 
 router.get('/phieuluong', async (req, res) => {
@@ -18,7 +18,7 @@ router.get('/phieuluong', async (req, res) => {
             Nam: nam 
         });
 
-        res.render('me/phieuluong', { 
+        res.render('me/PhieuLuong', { 
             phieu: phieuLuong, 
             thang: thang, 
             nam: nam,

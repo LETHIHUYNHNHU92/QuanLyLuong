@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
         var danhSachNhanVien = await nhanVienModel.find(dieuKienLoc); 
         
         // 5. Gửi danh sách kèm theo cái từ khóa cũ ra giao diện (để in lại lên ô nhập)
-        res.render('nhanvien', { 
+        res.render('NhanVien', { 
             danhSach: danhSachNhanVien,
             tuKhoa: tuKhoaTimKiem 
         });
@@ -57,7 +57,7 @@ router.post('/them', async (req, res) => {
         //Nếu không trùng thì lưu bình thường
         var nhanVienMoi = new nhanVienModel(duLieuForm);
         await nhanVienMoi.save();
-        res.redirect('/nhanvien');
+        res.redirect('/NhanVien');
         
     } catch (error) {
         console.log("Lỗi:", error);
@@ -75,7 +75,7 @@ router.get('/xoa/:id', async (req, res) => {
         await nhanVienModel.findByIdAndDelete(idCanXoa);
         
         //load lại trang danh sách
-        res.redirect('/nhanvien'); 
+        res.redirect('/NhanVien'); 
         
     } catch (error) {
         console.log("Lỗi khi xóa nhân viên:", error);
@@ -108,7 +108,7 @@ router.post('/sua/:id', async (req, res) => {
         await nhanVienModel.findByIdAndUpdate(idCanSua, duLieuMoi);
         
         // về lại trang danh sách
-        res.redirect('/nhanvien');
+        res.redirect('/NhanVien');
     } catch (error) {
         console.log("Lỗi khi cập nhật:", error);
         res.send("<h1>Lỗi! Không thể cập nhật.</h1>");

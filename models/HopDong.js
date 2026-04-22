@@ -12,5 +12,5 @@ const hopDongSchema = new mongoose.Schema({
     GhiChu: { type: String }
 });
 
-module.line = mongoose.model('hopdong', hopDongSchema);
-module.exports = mongoose.model('hopdong', hopDongSchema);
+module.line = mongoose.model('HopDong', hopDongSchema);
+module.exports = mongoose.model('HopDong', hopDongSchema);

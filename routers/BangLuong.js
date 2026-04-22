@@ -28,12 +28,12 @@ router.get('/', async (req, res) => {
     var nam = req.query.nam || new Date().getFullYear();
     
     var danhSach = await bangLuongModel.find({ Thang: thang, Nam: nam });
-    res.render('bangluong', { danhSach: danhSach, thang: thang, nam: nam });
+    res.render('BangLuong', { danhSach: danhSach, thang: thang, nam: nam });
 });
 
 
 // CHẠY BẢNG LƯƠNG
-router.get('/tinhluong', async (req, res) => {
+router.get('/TinhLuong', async (req, res) => {
     try {
         var thang = req.query.thang;
         var nam = req.query.nam;
@@ -98,7 +98,7 @@ router.get('/tinhluong', async (req, res) => {
             }
         }
         
-        res.redirect(`/bangluong?thang=${thang}&nam=${nam}`);
+        res.redirect(`/BangLuong?thang=${thang}&nam=${nam}`);
 
     } catch (error) {
         console.log("Lỗi tính lương:", error);
@@ -160,7 +160,7 @@ router.get('/xuat-google-sheet', async (req, res) => {
             resource: { values: rows },
         });
 
-        // 4. BÍ KÍP: Tự động tải file thẳng về máy tính kế toán dưới dạng Excel (.xlsx)
+        // 4.Tự động tải file thẳng về máy tính kế toán dưới dạng Excel
         const downloadUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=xlsx`;
         
         res.send(`

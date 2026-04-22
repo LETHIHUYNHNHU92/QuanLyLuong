@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nhanVienModel = require('../models/NhanVien');
-const BangLuong = require('sBangLuong');
+const BangLuong = require('../models/BangLuong');
 
 
 router.get('/', async (req, res) => {

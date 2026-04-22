@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
         }
 
         var danhSachCC = await chamCongModel.find(dieuKien);
-        res.render('chamcong', { 
+        res.render('ChamCong', { 
             danhSach: danhSachCC, 
             tuKhoa: tuKhoa,
             thang: thang,
@@ -58,7 +58,7 @@ router.post('/them', async (req, res) => {
         // Nếu chưa có thì lưu mới
         var chamCongMoi = new chamCongModel(duLieu);
         await chamCongMoi.save();
-        res.redirect('/chamcong');
+        res.redirect('/ChamCong');
 
     } catch (error) {
         console.log("Lỗi lưu chấm công:", error);
@@ -71,13 +71,13 @@ router.post('/them', async (req, res) => {
     }
 });
 
-// ==========================================
-// 4. XÓA CHẤM CÔNG (Bấm thùng rác)
-// ==========================================
+
+// 4. XÓA CHẤM CÔNG 
+
 router.get('/xoa/:id', async (req, res) => {
     try {
         await chamCongModel.findByIdAndDelete(req.params.id);
-        res.redirect('/chamcong');
+        res.redirect('/ChamCong');
     } catch (error) {
         console.log("Lỗi xóa chấm công:", error);
         res.send("Lỗi không thể xóa dữ liệu!");
@@ -99,7 +99,7 @@ router.get('/sua/:id', async (req, res) => {
 router.post('/sua/:id', async (req, res) => {
     try {
         await chamCongModel.findByIdAndUpdate(req.params.id, req.body);
-        res.redirect('/chamcong');
+        res.redirect('/ChamCong');
     } catch (error) {
         console.log("Lỗi cập nhật CC:", error);
         res.send("Lỗi không thể cập nhật dữ liệu!");
