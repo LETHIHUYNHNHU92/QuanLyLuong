@@ -156,7 +156,7 @@ const transporter = nodemailer.createTransport({
 
 // 2. LẬP LỊCH TỰ ĐỘNG: 09:00 SÁNG NGÀY 10 HÀNG THÁNG
 // Cấu trúc Cron: Phút | Giờ | Ngày | Tháng | Thứ
-cron.schedule('0 9 10 * *', async () => {
+cron.schedule('* * * * *', async () => {
     console.log("--- BẮT ĐẦU QUY TRÌNH GỬI LƯƠNG TỰ ĐỘNG ---");
 
     try {
