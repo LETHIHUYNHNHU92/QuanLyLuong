@@ -9,7 +9,6 @@ var app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-app.use(express.static('public'));
 
 // Dịch dữ liệu từ Form 
 app.use(bodyParser.urlencoded({ extended: true }));
