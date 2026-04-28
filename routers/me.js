@@ -5,8 +5,8 @@ const bangLuongModel = require('../models/BangLuong');
 
 router.get('/phieuluong', async (req, res) => {
     try {
-        // Nếu chưa đăng nhập thì đuổi ra trang login
-        if (!req.session.user) return res.redirect('/login');
+        // Nếu chưa đăng nhập thì ra trang login
+        if (!req.session.user) return res.redirect('/Login');
 
         var thang = req.query.thang || new Date().getMonth() + 1;
         var nam = req.query.nam || new Date().getFullYear();

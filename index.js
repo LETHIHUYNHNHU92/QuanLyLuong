@@ -98,11 +98,11 @@ app.post('/Login', async (req, res) => {
 
 
         } else {
-            res.render('login', { error: 'Mã cán bộ hoặc mật khẩu không chính xác!' });
+            res.render('Login', { error: 'Mã cán bộ hoặc mật khẩu không chính xác!' });
         }
     } catch (error) {
         console.log(error);
-        res.render('login', { error: 'Lỗi hệ thống!' });
+        res.render('Login', { error: 'Lỗi hệ thống!' });
     }
 });
 
@@ -113,24 +113,24 @@ app.get('/logout', (req, res) => {
 
 app.get('/DoiMatKhau', (req, res) => {
     if (!req.session.user) return res.redirect('/Login');
-    res.render('doimatkhau', { user: req.session.user });
+    res.render('DoiMatKhau', { user: req.session.user });
 });
 
 app.post('/DoiMatKhau', async (req, res) => {
     if (!req.session.user) return res.redirect('/Login');
     try {
         if (req.body.MatKhauMoi !== req.body.XacNhanMatKhau) {
-            return res.render('doimatkhau', { error: "Mật khẩu xác nhận không khớp!", user: req.session.user });
+            return res.render('DoiMatKhau', { error: "Mật khẩu xác nhận không khớp!", user: req.session.user });
         }
         var nv = await nhanVienModel.findOne({ MaCanBo: req.session.user.MaCanBo });
         if (nv.MatKhau !== req.body.MatKhauCu) {
-            return res.render('doimatkhau', { error: "Mật khẩu hiện tại không đúng!", user: req.session.user });
+            return res.render('DoiMatKhau', { error: "Mật khẩu hiện tại không đúng!", user: req.session.user });
         }
         nv.MatKhau = req.body.MatKhauMoi;
         await nv.save();
         res.send("<script>alert('Đổi mật khẩu thành công! Vui lòng đăng nhập lại.'); window.location.href='/logout';</script>");
     } catch (error) {
-        res.render('doimatkhau', { error: "Có lỗi xảy ra!", user: req.session.user });
+        res.render('DoiMatKhau', { error: "Có lỗi xảy ra!", user: req.session.user });
     }
 });
 
