@@ -5,20 +5,20 @@ const chamCongModel = require('../models/ChamCong');
 
 router.get('/', async (req, res) => {
     try {
-        var tuKhoa = req.query.tuKhoa;
+        var maCanBo = req.query.maCanBo; 
         var thang = req.query.thang || new Date().getMonth() + 1; 
         var nam = req.query.nam || new Date().getFullYear();
 
         var dieuKien = { Thang: thang, Nam: nam };
         
-        if (tuKhoa) {
-            dieuKien.MaCanBo = new RegExp(tuKhoa, 'i');
+        if (maCanBo && maCanBo.trim() !== '') {
+            dieuKien.MaCanBo = new RegExp(maCanBo.trim(), 'i'); 
         }
 
         var danhSachCC = await chamCongModel.find(dieuKien);
         res.render('ChamCong', { 
             danhSach: danhSachCC, 
-            tuKhoa: tuKhoa,
+            maCanBo: maCanBo, 
             thang: thang,
             nam: nam
         });
